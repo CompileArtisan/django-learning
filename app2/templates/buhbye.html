@@ -1,0 +1,100 @@
+<!--                      Exploring functions and buttons by Making a simple rock-paper-scissors game                   -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Hey {{ name }}! Before you go, here's a game of Rock Paper or Scissors  </h1>
+    <p id="result"><br><br><br></p>     
+
+    <button id = 'rock'>Rock</button>  
+
+    <button id = 'paper'>paper</button>
+    
+    <button id = 'scissors' onclick="scissorsclick()">scissors</button>
+
+    <br><br><br>
+
+    <button id="reset"> Reset </button>
+
+    <script>
+        // 3 ways of using functions on buttons
+
+        var score=0;
+
+        function computerMove(){
+            let computerChoice = Math.random(); // Math.random() ∈ [0, 1)
+            if(0<computerChoice && computerChoice<=0.33){
+                return "rock";
+            } else if(0.33<computerChoice && computerChoice<=0.66){
+                return "paper";
+            } else {
+                return "scissors";
+            }
+        }
+
+        
+        //method 1: we give the button an eventListener that checks for clicks, and we give the name of function to execute
+        document.getElementById('rock').addEventListener('click',rockClick);
+        function rockClick(){
+            let c1 = computerMove();
+            document.getElementById('result').innerHTML = `computer played ${c1}<br>`;
+            if(c1==='paper'){
+                document.getElementById('result').innerHTML += 'Dang I lost<br><br>';
+            } else if(c1==='scissors'){
+                document.getElementById('result').innerHTML += `HA I won!<br>score=${++score}`;
+            } else {
+                document.getElementById('result').innerHTML += 'Tie<br><br>';
+            }
+        }
+
+
+        
+        //method 2: we give the button an eventListener that checks for clicks, and we give an anonymous function to execute
+        document.getElementById('paper').addEventListener('click',function(){
+            let c2 = computerMove();
+            document.getElementById('result').innerHTML = `computer played ${c2}<br>`;
+            if(c2==='scissors'){
+                document.getElementById('result').innerHTML += 'Dang I lost<br><br>';
+            } else if(c2==='rock'){
+                document.getElementById('result').innerHTML += `HA I won!<br>score=${++score}`;
+            } else {
+                document.getElementById('result').innerHTML += 'Tie<br><br>';
+            }
+        });
+        
+
+        //method 3: button has an onclick parameter and this function is called there 
+        function scissorsclick(){
+            let c = computerMove();
+            document.getElementById('result').innerHTML = `computer played ${c}<br>`;
+            if(c==='rock'){
+                document.getElementById('result').innerHTML += 'Dang I lost<br><br>';
+            } else if(c==='paper'){
+                document.getElementById('result').innerHTML += `HA I won!<br>score=${++score}`;
+            } else {
+                document.getElementById('result').innerHTML += 'Tie<br><br>';
+            }
+        }
+        
+        //method 4: arrow function
+        // document.getElementById('reset').addEventListener('click',function(){
+        //     document.getElementById('result').innerHTML = 'resetted<br><br><br>'
+        //     score=0;
+        // });
+        document.getElementById('reset').onclick = () => {
+            document.getElementById('result').innerHTML = 'resetted<br><br><br>';
+            score=0;
+            setTimeout(() => {
+                document.getElementById('result').innerHTML = 'Click any one of the buttons to start playing<br><br>';
+            }, 3000); // 3000 milliseconds = 3 seconds
+        } // setTimeOut(function,time in milliseconds)
+
+
+    </script>
+</body>
+</html>
